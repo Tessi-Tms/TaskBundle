@@ -38,14 +38,14 @@ class ActionConsumer implements ConsumerInterface
             $options = unserialize($msg->getBody());
 
             $this->documentManager->clear(Task::class);
-
             $task = $this->documentManager->getRepository(Task::class)->find($options['task_id']);
-
             $this->actionHandler->execute($task);
 
             return ConsumerInterface::MSG_ACK;
         } catch (\Exception $e) {
-            echo sprintf("The message was rejected with the following message: %s\n", $e->getMessage());
+            echo sprintf("[ActionConsumer] The message was rejected with the following message : %s\n", $e->getMessage());
+
+            $this->actionHandler->endErroredTask($task, $e->getMessage());
 
             return ConsumerInterface::MSG_REJECT;
         }

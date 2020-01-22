@@ -210,6 +210,22 @@ class ActionHandler
     }
 
     /**
+     * Set an errored task.
+     *
+     * @param Task   $task
+     * @param string $errorMessage
+     */
+    public function endErroredTask(Task $task, $errorMessage = '')
+    {
+        $this->setErroredTask($task, $errorMessage);
+
+        $this->dispatcher->dispatch(
+            Task::ENDED,
+            new TaskEvent($task)
+        );
+    }
+
+    /**
      * Merge parameters with the SecurityContext (user)
      * the navigation flow data (flow_data)
      * and the session (session).
