@@ -32,7 +32,7 @@ class TaskConsumer implements ConsumerInterface
 
             return ConsumerInterface::MSG_ACK;
         } catch (\Exception $e) {
-            echo sprintf("The message was rejected with the following message: %s\n", $e->getMessage());
+            echo sprintf("[TaskConsumer] The message was rejected with the following message : %s\n", $e->getMessage());
 
             return ConsumerInterface::MSG_REJECT;
         }
