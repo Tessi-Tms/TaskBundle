@@ -37,7 +37,6 @@
     "autoload": {
         "psr-0": { "IDCI\\Bundle\\TaskBundle": "" }
     },
-    "minimum-stability": "dev",
     "prefer-stable": true,
     "target-dir": "IDCI/Bundle/TaskBundle"
 }
