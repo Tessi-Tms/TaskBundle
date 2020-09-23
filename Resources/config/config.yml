@@ -25,7 +25,7 @@ old_sound_rabbit_mq:
             queue_options:
                 name: "%application_name%-action_queue"
                 routing_keys:
-                    - '%application_name%'
+                    - "%application_name%"
             callback:         "idci_task.service.consumer.action"
             qos_options:      {prefetch_size: 0; prefetch_count: 1, global: false}
             graceful_max_execution:
@@ -47,7 +47,7 @@ old_sound_rabbit_mq:
             queue_options:
                 name: "%application_name%-extract_rule_queue"
                 routing_keys:
-                    - '%application_name%'
+                    - "%application_name%"
             callback:         "idci_task.service.consumer.extract_rule"
             qos_options:      {prefetch_size: 0, prefetch_count: 1, global: false}
             graceful_max_execution:
@@ -65,13 +65,13 @@ old_sound_rabbit_mq:
                 timeout: 1800 # 30 minutes
 
 doctrine_mongodb:
-    default_database: %task_mongo_database_name%
+    default_database: "%task_mongo_database_name%"
     connections:
         task:
-            server: %task_mongo_database_host%
+            server: "%task_mongo_database_host%"
             options: {}
         log:
-            server: %task_mongo_database_host%
+            server: "%task_mongo_database_host%"
             options: {}
     document_managers:
         task:
@@ -91,5 +91,5 @@ monolog:
           channels: ['idci_task.action']
           mongo:
               id: mongolog
-              database: %task_mongo_database_name%
+              database: "%task_mongo_database_name%"
               collection: task_logs
