@@ -32,7 +32,7 @@
         "php-amqplib/rabbitmq-bundle":  "~1.14",
         "mtdowling/cron-expression":    "~1.2",
         "ramsey/uuid":                  "~3.0",
-        "idci/asset-loader-bundle":     "~1.0",
+        "idci/asset-loader-bundle":     "~2.0",
         "symfony/twig-bundle":          "~3.4"
     },
     "require-dev": {
