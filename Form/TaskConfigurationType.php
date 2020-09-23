@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\ConfigurationValidatorBundle\Validator\Constraints\CheckConfiguration;
 use IDCI\Bundle\TaskBundle\Validator\Constraints as IDCITaskConstraint;
+use IDCI\Bundle\TaskBundle\Form\Type as IDCIType;
 
 class TaskConfigurationType extends AbstractType
 {
@@ -32,7 +33,7 @@ class TaskConfigurationType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('extractRule', 'extract_rule_editor', array(
+            ->add('extractRule', IDCIType\ExtractRuleEditorType::class, array(
                 'constraints' => array(
                     new IDCITaskConstraint\CheckJson(),
                     new CheckConfiguration(array(
@@ -40,7 +41,7 @@ class TaskConfigurationType extends AbstractType
                     )),
                 ),
             ))
-            ->add('workflow', 'workflow_editor', array(
+            ->add('workflow', IDCIType\WorkflowEditorType::class, array(
                 'constraints' => array(
                     new IDCITaskConstraint\CheckJson(),
                     new CheckConfiguration(array(

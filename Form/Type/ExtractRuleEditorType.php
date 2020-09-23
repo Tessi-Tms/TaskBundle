@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\ConfigurationValidatorBundle\Validator\Constraints\CheckConfiguration;
 use IDCI\Bundle\TaskBundle\Validator\Constraints as IDCITaskConstraint;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ExtractRuleEditorType extends AbstractType implements AssetProviderInterface
 {
@@ -76,7 +77,7 @@ class ExtractRuleEditorType extends AbstractType implements AssetProviderInterfa
      */
     public function getParent()
     {
-        return 'textarea';
+        return TextareaType::class;
     }
 
     /**

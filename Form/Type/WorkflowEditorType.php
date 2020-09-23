@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use IDCI\Bundle\ConfigurationValidatorBundle\Validator\Constraints\CheckConfiguration;
 use IDCI\Bundle\TaskBundle\Validator\Constraints as IDCITaskConstraint;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class WorkflowEditorType extends AbstractType implements AssetProviderInterface
 {
@@ -79,7 +80,7 @@ class WorkflowEditorType extends AbstractType implements AssetProviderInterface
      */
     public function getParent()
     {
-        return 'textarea';
+        return TextareaType::class;
     }
 
     /**
