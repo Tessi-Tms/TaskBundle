@@ -12,12 +12,7 @@
             "homepage": "https://www.idci-consulting.fr"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Tessi-Tms/TmsLoggerBundle.git"
-        }
-    ],
+    "repositories": [],
     "require": {
         "php":                          ">=5.5.9",
         "symfony/framework-bundle":     ">=2.3",
