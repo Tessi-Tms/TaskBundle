@@ -28,7 +28,7 @@ class Action
     {
         $this->statuses = new ArrayCollection();
     }
-    
+
     /**
      * Set name
      *

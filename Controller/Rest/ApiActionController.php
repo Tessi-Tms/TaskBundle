@@ -19,6 +19,7 @@ use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
 use Doctrine\Common\Inflector\Inflector;
 use IDCI\Bundle\RestBundle\Formatter\AbstractHypermediaFormatter;
+use IDCI\Bundle\TaskBundle\Action\ActionRegistry;
 
 /**
  * Action API REST controller
@@ -37,7 +38,7 @@ class ApiActionController extends FOSRestController
     {
         $view = View::create()->setFormat($_format);
 
-        $actions = $this->get('idci_task.action_registry')->getActions();
+        $actions = $this->get(ActionRegistry::class)->getActions();
         ksort($actions);
         $view->setData(array_keys($actions));
 
@@ -57,7 +58,7 @@ class ApiActionController extends FOSRestController
      */
     public function getActionParametersAction($name, $_format)
     {
-        $registry = $this->get('idci_task.action_registry');
+        $registry = $this->get(ActionRegistry::class);
         if (!($registry->hasAction($name))) {
             throw new NotFoundHttpException(sprintf(
                 'The action `%s` was not found',

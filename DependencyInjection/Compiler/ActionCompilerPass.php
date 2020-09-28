@@ -11,6 +11,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use IDCI\Bundle\TaskBundle\Exception\UndefinedActionException;
+use IDCI\Bundle\TaskBundle\Action\ActionRegistry;
+use IDCI\Bundle\TaskBundle\Action\ActionConfigurationRule;
 
 class ActionCompilerPass implements CompilerPassInterface
 {
@@ -19,11 +21,11 @@ class ActionCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('idci_task.action_registry')) {
+        if (!$container->hasDefinition(ActionRegistry::class)) {
             return;
         }
 
-        $registryDefinition = $container->getDefinition('idci_task.action_registry');
+        $registryDefinition = $container->getDefinition(ActionRegistry::class);
         $actions = $container->getParameter('idci_task.actions');
 
         foreach ($container->findTaggedServiceIds('idci_task.action') as $id => $tags) {
@@ -41,7 +43,7 @@ class ActionCompilerPass implements CompilerPassInterface
         }
 
         foreach ($actions as $name => $configuration) {
-            $serviceDefinition = new DefinitionDecorator('idci_task.action_configuration');
+            $serviceDefinition = new DefinitionDecorator(ActionConfigurationRule::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {
@@ -57,7 +59,7 @@ class ActionCompilerPass implements CompilerPassInterface
 
             $serviceDefinition->setAbstract($configuration['abstract']);
             $serviceDefinition->setPublic(!$configuration['abstract']);
-            $serviceDefinition->replaceArgument(0, $configuration);
+            $serviceDefinition->replaceArgument('$actionRegistry', $configuration);
 
             $container->setDefinition(
                 $this->getDefinitionName($name),

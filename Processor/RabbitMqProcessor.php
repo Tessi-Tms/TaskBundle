@@ -27,6 +27,11 @@ class RabbitMqProcessor implements ProcessorInterface
     private $actionProducer;
 
     /**
+    * @var DocumentManager
+    */
+    private $documentManager;
+
+    /**
      * @var string
      */
     private $applicationName;
@@ -35,6 +40,7 @@ class RabbitMqProcessor implements ProcessorInterface
      * @var string
      */
     private $taskConfigurationClass;
+
 
     /**
      * Constructor

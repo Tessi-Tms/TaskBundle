@@ -19,6 +19,7 @@ use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
 use Doctrine\Common\Inflector\Inflector;
 use IDCI\Bundle\RestBundle\Formatter\AbstractHypermediaFormatter;
+use IDCI\Bundle\TaskBundle\ExtractRule\ExtractRuleRegistry;
 
 /**
  * ExtractRule API REST controller
@@ -37,7 +38,7 @@ class ApiExtractRuleController extends FOSRestController
     {
         $view = View::create()->setFormat($_format);
 
-        $extractRules = $this->get('idci_task.extract_rule_registry')->getRules();
+        $extractRules = $this->get(ExtractRuleRegistry::class)->getRules();
         ksort($extractRules);
         $view->setData(array_keys($extractRules));
 
@@ -56,7 +57,7 @@ class ApiExtractRuleController extends FOSRestController
      */
     public function getExtractRulesParametersAction($name, $_format)
     {
-        $registry = $this->get('idci_task.extract_rule_registry');
+        $registry = $this->get(ExtractRuleRegistry::class);
         if (!($registry->hasRule($name))) {
             throw new NotFoundHttpException(sprintf(
                 'The extract rule `%s` was not found',

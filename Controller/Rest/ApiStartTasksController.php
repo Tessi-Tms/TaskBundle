@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use FOS\RestBundle\Controller\Annotations\Post;
+use IDCI\Bundle\TaskBundle\Processor\RabbitMqProcessor;
 
 /**
  * TaskConfiguration API REST controller
@@ -33,7 +34,7 @@ class ApiStartTasksController extends Controller
             throw new BadRequestHttpException();
         }
 
-        $processor = $this->get('idci_task.processor.rabbitmq');
+        $processor = $this->get(RabbitMqProcessor::class);
         $taskConfiguration = $this
             ->getDoctrine()
             ->getManager()

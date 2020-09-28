@@ -1,77 +1,77 @@
 old_sound_rabbit_mq:
     connections:
         default:
-            host:     "%task_rabbitmq_host%"
-            port:     "%task_rabbitmq_port%"
-            user:     "%task_rabbitmq_user%"
-            password: "%task_rabbitmq_password%"
-            vhost:    "%task_rabbitmq_vhost%"
-            lazy:     "%task_rabbitmq_lazy%"
+            host:     '%task_rabbitmq_host%'
+            port:     '%task_rabbitmq_port%'
+            user:     '%task_rabbitmq_user%'
+            password: '%task_rabbitmq_password%'
+            vhost:    '%task_rabbitmq_vhost%'
+            lazy:     '%task_rabbitmq_lazy%'
     producers:
         action:
-            connection:       "default"
-            exchange_options: {name: "action_exchange", type: "direct"}
+            connection:       'default'
+            exchange_options: {name: 'action_exchange', type: 'direct'}
         extract_rule:
-            connection:       "default"
-            exchange_options: {name: "extract_rule_exchange", type: "direct"}
+            connection:       'default'
+            exchange_options: {name: 'extract_rule_exchange', type: 'direct'}
         task:
-            connection:       "default"
-            exchange_options: {name: "task_exchange", type: "direct"}
+            connection:       'default'
+            exchange_options: {name: 'task_exchange', type: 'direct'}
 
     consumers:
         action:
-            connection:       "default"
-            exchange_options: {name: "action_exchange", type: "direct"}
+            connection:       'default'
+            exchange_options: {name: 'action_exchange', type: 'direct'}
             queue_options:
-                name: "%application_name%-action_queue"
+                name: '%application_name%-action_queue'
                 routing_keys:
-                    - "%application_name%"
-            callback:         "idci_task.service.consumer.action"
+                    - '%application_name%'
+            callback:         'IDCI\Bundle\TaskBundle\RabbitMq\Consumer\ActionConsumer'
             qos_options:      {prefetch_size: 0; prefetch_count: 1, global: false}
             graceful_max_execution:
                 timeout: 1800 # 30 minutes
         sequential:
-            connection:       "default"
-            exchange_options: {name: "action_exchange", type: "direct"}
+            connection:       'default'
+            exchange_options: {name: 'action_exchange', type: 'direct'}
             queue_options:
-                name: "%application_name%-sequential_queue"
+                name: '%application_name%-sequential_queue'
                 routing_keys:
-                    - "%application_name%-sequential"
-            callback:         "idci_task.service.consumer.action"
+                    - '%application_name%-sequential'
+            callback:         'IDCI\Bundle\TaskBundle\RabbitMq\Consumer\ActionConsumer'
             qos_options:      {prefetch_size: 0, prefetch_count: 1, global: false}
             graceful_max_execution:
                 timeout: 1800 # 30 minutes
         extract_rule:
-            connection:       "default"
-            exchange_options: {name: "extract_rule_exchange", type: "direct"}
+            connection:       'default'
+            exchange_options: {name: 'extract_rule_exchange', type: 'direct'}
             queue_options:
-                name: "%application_name%-extract_rule_queue"
+                name: '%application_name%-extract_rule_queue'
                 routing_keys:
-                    - "%application_name%"
-            callback:         "idci_task.service.consumer.extract_rule"
+                    - '%application_name%'
+            callback:         'IDCI\Bundle\TaskBundle\RabbitMq\Consumer\ExtractRuleConsumer'
             qos_options:      {prefetch_size: 0, prefetch_count: 1, global: false}
             graceful_max_execution:
                 timeout: 1800 # 30 minutes
         task:
-            connection:       "default"
-            exchange_options: {name: "task_exchange", type: "direct"}
+            connection:       'default'
+            exchange_options: {name: 'task_exchange', type: 'direct'}
             queue_options:
-                name: "%application_name%-task_queue"
+                name: '%application_name%-task_queue'
                 routing_keys:
                     - '%application_name%'
-            callback:         "idci_task.service.consumer.task"
+            callback:         'IDCI\Bundle\TaskBundle\RabbitMq\Consumer\TaskConsumer'
             qos_options:      {prefetch_size: 0, prefetch_count: 1, global: false}
             graceful_max_execution:
                 timeout: 1800 # 30 minutes
 
 doctrine_mongodb:
-    default_database: "%task_mongo_database_name%"
+    default_database: '%task_mongo_database_name%'
     connections:
         task:
-            server: "%task_mongo_database_host%"
+            server: '%task_mongo_database_host%'
             options: {}
         log:
-            server: "%task_mongo_database_host%"
+            server: '%task_mongo_database_host%'
             options: {}
     document_managers:
         task:
@@ -91,5 +91,5 @@ monolog:
           channels: ['idci_task.action']
           mongo:
               id: mongolog
-              database: "%task_mongo_database_name%"
+              database: '%task_mongo_database_name%'
               collection: task_logs
