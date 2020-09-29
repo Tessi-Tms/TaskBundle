@@ -90,6 +90,7 @@ monolog:
             level: info
             channels: ['idci_task.action']
             mongo:
-                id: mongolog
+                host: '%monolog_database_host%'
+                port: '%monolog_database_port%'
                 database: '%task_mongo_database_name%'
                 collection: task_logs
