@@ -136,11 +136,10 @@ services:
     mongolog.connection:
         class: MongoDoctrine\MongoDB\Connection
         factory_service: doctrine_mongodb.odm.log_document_manager
-        factory_method: getConnection
-        calls:
-            - [initialize, []]
+        factory_method: getMongoClient
 
     IDCI\Bundle\TaskBundle\Monolog\Processor\TaskLogProcessor:
+        autowire: true
         tags:
             - { name: monolog.processor, method: processRecord, handler: mongo }
 

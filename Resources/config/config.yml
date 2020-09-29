@@ -83,13 +83,13 @@ doctrine_mongodb:
             logging: false
 
 monolog:
-  channels: ['idci_task.action']
-  handlers:
-      mongo:
-          type: mongo
-          level: info
-          channels: ['idci_task.action']
-          mongo:
-              id: mongolog
-              database: '%task_mongo_database_name%'
-              collection: task_logs
+    channels: ['idci_task.action']
+    handlers:
+        mongo:
+            type: mongo
+            level: info
+            channels: ['idci_task.action']
+            mongo:
+                id: mongolog
+                database: '%task_mongo_database_name%'
+                collection: task_logs
