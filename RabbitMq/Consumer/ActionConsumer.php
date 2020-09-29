@@ -28,7 +28,6 @@ class ActionConsumer implements ConsumerInterface
      */
     public function __construct(DocumentManager $documentManager, ActionHandler $actionHandler)
     {
-        die('toto');
         $this->documentManager = $documentManager;
         $this->actionHandler = $actionHandler;
     }
