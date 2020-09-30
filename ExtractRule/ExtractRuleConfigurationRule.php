@@ -16,7 +16,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class ExtractRuleConfigurationRule implements ConfigurationInterface
 {
-    /** @var ExtractRuleRegistry */
+    /**
+     * @var ExtractRuleRegistry
+     */
     protected $extractRuleRegistry;
 
     public function __construct(ExtractRuleRegistry $extractRuleRegistry)

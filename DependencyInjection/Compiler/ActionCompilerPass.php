@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use IDCI\Bundle\TaskBundle\Exception\UndefinedActionException;
 use IDCI\Bundle\TaskBundle\Action\ActionRegistry;
-use IDCI\Bundle\TaskBundle\Action\ActionConfigurationRule;
+use IDCI\Bundle\TaskBundle\Action\Action;
 
 class ActionCompilerPass implements CompilerPassInterface
 {
@@ -43,7 +43,7 @@ class ActionCompilerPass implements CompilerPassInterface
         }
 
         foreach ($actions as $name => $configuration) {
-            $serviceDefinition = new DefinitionDecorator(ActionConfigurationRule::class);
+            $serviceDefinition = new DefinitionDecorator(Action::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {
@@ -59,7 +59,7 @@ class ActionCompilerPass implements CompilerPassInterface
 
             $serviceDefinition->setAbstract($configuration['abstract']);
             $serviceDefinition->setPublic(!$configuration['abstract']);
-            $serviceDefinition->replaceArgument('$actionRegistry', $configuration);
+            $serviceDefinition->replaceArgument(0, $configuration);
 
             $container->setDefinition(
                 $this->getDefinitionName($name),

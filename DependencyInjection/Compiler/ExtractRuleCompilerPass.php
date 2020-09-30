@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use IDCI\Bundle\TaskBundle\Exception\UndefinedExtractRuleException;
 use IDCI\Bundle\TaskBundle\ExtractRule\ExtractRuleRegistry;
-use IDCI\Bundle\TaskBundle\ExtractRule\ExtractRuleConfigurationRule;
+use IDCI\Bundle\TaskBundle\ExtractRule\ExtractRule;
 
 class ExtractRuleCompilerPass implements CompilerPassInterface
 {
@@ -43,7 +43,7 @@ class ExtractRuleCompilerPass implements CompilerPassInterface
         }
 
         foreach ($extractRules as $name => $configuration) {
-            $serviceDefinition = new DefinitionDecorator(ExtractRuleConfigurationRule::class);
+            $serviceDefinition = new DefinitionDecorator(ExtractRule::class);
 
             if (null !== $configuration['parent']) {
                 if (!$container->hasDefinition($this->getDefinitionName($configuration['parent']))) {
@@ -59,7 +59,7 @@ class ExtractRuleCompilerPass implements CompilerPassInterface
 
             $serviceDefinition->setAbstract(false);
             $serviceDefinition->setPublic(true);
-            $serviceDefinition->replaceArgument('$extractRuleRegistry', $configuration);
+            $serviceDefinition->replaceArgument(0, $configuration);
 
             $container->setDefinition(
                 $this->getDefinitionName($name),
