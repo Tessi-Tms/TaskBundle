@@ -44,14 +44,14 @@ services:
     IDCI\Bundle\TaskBundle\Event\Subscriber\TaskEventSubscriber:
         arguments:
             $actionProducer: '@old_sound_rabbit_mq.action_producer'
-            $documentManager: '@doctrine_mongodb.odm.task_document_manager'
+            $documentManager: '@doctrine_mongodb.odm.document_manager'
         tags:
             - { name: kernel.event_subscriber }
 
     ## RabbitMQ consumers
     IDCI\Bundle\TaskBundle\RabbitMq\Consumer\ActionConsumer:
         arguments:
-            $documentManager: '@doctrine_mongodb.odm.task_document_manager'
+            $documentManager: '@doctrine_mongodb.odm.document_manager'
             $actionHandler: '@IDCI\Bundle\TaskBundle\Handler\ActionHandler'
 
     IDCI\Bundle\TaskBundle\RabbitMq\Consumer\ExtractRuleConsumer:
@@ -70,7 +70,7 @@ services:
             $extractRuleProducer: '@old_sound_rabbit_mq.extract_rule_producer'
             $taskProducer: '@old_sound_rabbit_mq.task_producer'
             $actionProducer: '@old_sound_rabbit_mq.action_producer'
-            $documentManager: '@doctrine_mongodb.odm.task_document_manager'
+            $documentManager: '@doctrine_mongodb.odm.document_manager'
             $applicationName: '%application_name%'
             $taskConfigurationClass: '%idci_task.task_configuration_class%'
 
@@ -95,13 +95,13 @@ services:
     IDCI\Bundle\TaskBundle\Handler\TaskHandler:
         arguments:
             $taskFactory: '@IDCI\Bundle\TaskBundle\Factory\TaskFactory'
-            $documentManager: '@doctrine_mongodb.odm.task_document_manager'
+            $documentManager: '@doctrine_mongodb.odm.document_manager'
             $dispatcher: '@event_dispatcher'
 
     IDCI\Bundle\TaskBundle\Handler\WorkflowHandler:
         arguments:
             $merger: '@twig'
-            $documentManager: '@doctrine_mongodb.odm.task_document_manager'
+            $documentManager: '@doctrine_mongodb.odm.document_manager'
             $registry: '@IDCI\Bundle\TaskBundle\Action\ActionRegistry'
 
 
