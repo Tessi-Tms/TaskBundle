@@ -57,6 +57,7 @@ abstract class AbstractAction implements ActionInterface
 
     /**
      * {@inheritdoc}
+     * @required
      */
     public function setLogger(LoggerInterface $logger)
     {
@@ -75,6 +76,7 @@ abstract class AbstractAction implements ActionInterface
 
     /**
      * {@inheritdoc}
+     * @required
      */
     public function setTaskLogProcessor(TaskLogProcessor $taskLogProcessor)
     {

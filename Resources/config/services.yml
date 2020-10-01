@@ -18,14 +18,12 @@ services:
 
     ## Actions ##
     IDCI\Bundle\TaskBundle\Action\AbstractAction:
+        autowire: false
+        autoconfigure: false
         abstract: true
         calls:
-            - method: setLogger
-              arguments:
-                  - '@monolog.logger.idci_task.action'
-            - method: setTaskLogProcessor
-              arguments:
-                  - '@IDCI\Bundle\TaskBundle\Monolog\Processor\TaskLogProcessor'
+            - [setLogger, ['@monolog.logger.idci_task.action']]
+            - [setTaskLogProcessor, ['@IDCI\Bundle\TaskBundle\Monolog\Processor\TaskLogProcessor']]
 
     ## Subscriber ##
     IDCI\Bundle\TaskBundle\Event\Subscriber\ExtractedDataSubscriber:
@@ -129,7 +127,6 @@ services:
 
     ## Monolog ##
     IDCI\Bundle\TaskBundle\Monolog\Processor\TaskLogProcessor:
-        autowire: true
         tags:
             - { name: monolog.processor, method: processRecord, handler: mongo }
 

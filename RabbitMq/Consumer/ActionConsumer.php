@@ -36,7 +36,6 @@ class ActionConsumer implements ConsumerInterface
     {
         try {
             $options = unserialize($msg->getBody());
-
             $this->documentManager->clear(Task::class);
             $task = $this->documentManager->getRepository(Task::class)->find($options['task_id']);
             $this->actionHandler->execute($task);
