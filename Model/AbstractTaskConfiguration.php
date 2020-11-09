@@ -54,6 +54,11 @@ abstract class AbstractTaskConfiguration implements \JsonSerializable
     protected $cronExpression;
 
     /**
+     * @var bool
+     */
+    protected $cronForce;
+
+    /**
      * toString.
      */
     public function __toString()
@@ -69,6 +74,7 @@ abstract class AbstractTaskConfiguration implements \JsonSerializable
         $this->extractRule = $this->actions = '{}';
 
         $this->setSlug($this->generateSlug());
+        $this->setCronForce = false;
 
         $now = new \DateTime();
         $this->createdAt = $now;
@@ -90,6 +96,7 @@ abstract class AbstractTaskConfiguration implements \JsonSerializable
             'createdAt'      => $this->createdAt,
             'updatedAt'      => $this->updatedAt,
             'cronExpression' => $this->cronExpression,
+            'cronForce'      => $this->cronForce,
         );
     }
 
@@ -311,5 +318,29 @@ abstract class AbstractTaskConfiguration implements \JsonSerializable
         $this->cronExpression = $cronExpression;
 
         return $this;
+    }
+
+    /**
+     * Set cron force.
+     *
+     * @param bool $cronForce
+     *
+     * @return AbstractTaskConfiguration
+     */
+    public function setCronForce($cronForce)
+    {
+        $this->cronForce = $cronForce;
+
+        return $this;
+    }
+
+    /**
+     * Get cron force.
+     *
+     * @return bool
+     */
+    public function getCronForce()
+    {
+        return $this->cronForce;
     }
 }
