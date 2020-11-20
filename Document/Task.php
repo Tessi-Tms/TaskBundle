@@ -401,6 +401,13 @@ class Task
      */
     public function getCurrentAction()
     {
+        if (null === $this->actions->first()) {
+            throw new \Exception(sprintf(
+                'The current action not found for the task %s',
+                $task->getId()
+            ));
+        }
+
         return $this->actions->first();
     }
 

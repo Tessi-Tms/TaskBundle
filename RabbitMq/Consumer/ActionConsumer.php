@@ -45,7 +45,9 @@ class ActionConsumer implements ConsumerInterface
         } catch (\Exception $e) {
             echo sprintf("[ActionConsumer] The message was rejected with the following message : %s\n", $e->getMessage());
 
-            $this->actionHandler->endErroredTask($task, $e->getMessage());
+            if ($task) {
+                $this->actionHandler->endErroredTask($task, $e->getMessage());
+            }
 
             return ConsumerInterface::MSG_REJECT;
         }

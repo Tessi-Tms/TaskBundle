@@ -95,15 +95,16 @@ class ActionHandler
      */
     public function execute(Task $task)
     {
+	    $taskCurrentAction = $task->getCurrentAction();
         if ($task->getConfiguration() === null) {
             $currentAction = array(
-                'service'    => $task->getCurrentAction()->getName(),
-                'name'       => $task->getCurrentAction()->getName(),
+                'service'    => $taskCurrentAction->getName(),
+                'name'       => $taskCurrentAction->getName(),
                 'parameters' => $task->getData()->getExtractedData(),
             );
         } else {
             try {
-                $currentAction = $task->getConfiguration()->getAction($task->getCurrentAction()->getName());
+                $currentAction = $task->getConfiguration()->getAction($taskCurrentAction->getName());
 
                 if (!array_key_exists('parameters', $currentAction)) {
                     $currentAction['parameters'] = array();
@@ -116,7 +117,7 @@ class ActionHandler
                     $task->getData()->getActionData()
                 );
             } catch (\Exception $e) {
-                $this->setErroredTask($task, sprintf(
+                $this->endErroredTask($task, sprintf(
                     "There is a problem in your configuration with the following message:\n %s",
                     $e->getMessage()
                 ));
@@ -218,7 +219,6 @@ class ActionHandler
     public function endErroredTask(Task $task, $errorMessage = '')
     {
         $this->setErroredTask($task, $errorMessage);
-
         $this->dispatcher->dispatch(
             Task::ENDED,
             new TaskEvent($task)
